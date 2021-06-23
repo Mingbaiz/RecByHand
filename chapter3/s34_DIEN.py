@@ -63,7 +63,7 @@ class AUGRU_Cell(nn.Module):
         self.Uh = init.xavier_uniform_( Parameter( torch.empty( hidden_dim, hidden_dim ) ) )
         self.bh = init.xavier_uniform_( Parameter( torch.empty( 1, hidden_dim ) ) )
 
-        # 初始化注意计算里的模型
+        # 初始化注意计算里的模型参数
         self.Wa = init.xavier_uniform_( Parameter( torch.empty( hidden_dim, in_dim ) ) )
 
     #注意力的计算
@@ -115,10 +115,13 @@ class Dice( nn.Module ):
 
 class DIEN( nn.Module ):
 
-    def __init__( self, n_items, dim = 128,alpha=0.2):
+    def __init__( self, n_items, dim = 128, alpha=0.2):
         super( DIEN, self ).__init__()
-        self.alpha = alpha
+        self.dim = dim
+        self.alpha = alpha#计算辅助损失函数时的权重
         self.n_items = n_items
+        self.BCELoss = nn.BCELoss( )
+
         # 随机初始化所有特征的特征向量
         self.items = nn.Embedding( n_items, dim, max_norm = 1 )
 
@@ -126,10 +129,6 @@ class DIEN( nn.Module ):
         self.GRU = nn.GRU( dim, dim, batch_first = True)
         # 初始化兴趣演化层的AUGRU网络，因无现成模型，所以使用我们自己编写的AUGRU
         self.AUGRU = AUGRU( dim, dim )
-
-        # 初始化辅助损失函数的全连接层与损失函数
-        self.ph_dense = self.dense_layer( dim, 1 , nn.Sigmoid )
-        self.BCELoss = nn.BCELoss( )
 
         # 初始化最终ctr预测的mlp网络, 激活函数采用Dice
         self.dense1 = self.dense_layer( dim*2, dim, Dice )
@@ -143,19 +142,24 @@ class DIEN( nn.Module ):
             act() )
 
     #辅助损失函数的计算过程
-    def forwardAuxiliary( self, outs, history_labels ):
+    def forwardAuxiliary( self, outs, item_embs, history_labels ):
         '''
-        :param outs: 兴趣抽取层GRU网络输出的outs [ batch_size, len_seqs, 1 ]
+        :param item_embs: 历史序列物品的向量 [ batch_size, len_seqs, dim ]
+        :param outs: 兴趣抽取层GRU网络输出的outs [ batch_size, len_seqs, dim ]
         :param history_labels: 历史序列物品标注 [ batch_size, len_seqs, 1 ]
         :return: 辅助损失函数
         '''
-        # [ batch_size, len_seqs, 1 ]
-        outs = self.ph_dense( outs )
-        # [ batch_size*len_seqs, 1 ]
-        outs = outs.reshape( -1, 1 )
-        # [ batch_size*len_seqs,1 ]
+        # [ batch_size * len_seqs, dim ]
+        item_embs = item_embs.reshape( -1, self.dim )
+        # [ batch_size * len_seqs, dim ]
+        outs = outs.reshape( -1, self.dim )
+        # [ batch_size * len_seqs ]
+        out = torch.sum( outs * item_embs, dim = 1 )
+        # [ batch_size * len_seqs, 1 ]
+        out = torch.unsqueeze( torch.sigmoid( out ), 1 )
+        # [ batch_size * len_seqs,1 ]
         history_labels = history_labels.reshape( -1, 1 ).float()
-        return self.BCELoss( outs, history_labels )
+        return self.BCELoss( out, history_labels )
 
     def __getRecLogit( self, h, item ):
         #将AUGRU输出的h向量与目标物品相片拼接,之后经MLP传播
@@ -179,7 +183,7 @@ class DIEN( nn.Module ):
 
         outs, _ = self.GRU( item_embs )
         #利用GRU输出的outs得到辅助损失函数
-        auxi_loss = self.forwardAuxiliary( outs, history_labels )
+        auxi_loss = self.forwardAuxiliary( outs,item_embs, history_labels )
         # [ batch_size, dim]
         target_item_embs = self.items( target_item )
 

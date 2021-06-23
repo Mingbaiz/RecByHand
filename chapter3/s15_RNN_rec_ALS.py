@@ -33,7 +33,7 @@ class RNN_ALS_rec( nn.Module ):
 #做评估
 def doEva(net,test_triple):
     d = torch.LongTensor(test_triple)
-    x = d[:, :-1]
+    x = d[:, :-2]
     item = d[:, -2]
     y = d[:,-1].float()
 

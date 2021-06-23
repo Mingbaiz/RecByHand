@@ -66,7 +66,7 @@ class DIN( nn.Module ):
 #做评估
 def doEva(net,test_triple):
     d = torch.LongTensor(test_triple)
-    x = d[:, :-1]
+    x = d[:, :-2]
     item = d[:, -2]
     y = torch.FloatTensor(d[:, -1].detach().numpy())
     with torch.no_grad():
