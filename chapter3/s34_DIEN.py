@@ -55,7 +55,7 @@ class AUGRU_Cell(nn.Module):
 
         # 初始化重置门的模型参数
         self.Wr = init.xavier_uniform_( Parameter( torch.empty( in_dim, hidden_dim ) ) )
-        self.Ur = init.xavier_uniform_(Parameter( torch.empty( in_dim, hidden_dim ) ) )
+        self.Ur = init.xavier_uniform_( Parameter( torch.empty( in_dim, hidden_dim ) ) )
         self.br = init.xavier_uniform_( Parameter( torch.empty( 1, hidden_dim ) ) )
 
         # 初始化计算h~的模型参数

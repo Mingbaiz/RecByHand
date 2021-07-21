@@ -44,7 +44,7 @@ def getSimMatrixOfAllRelations(r_al,movie_set):
 
 class PER(torch.nn.Module):
 
-    def __init__(self, kgPairs,user_set,movie_set,ratingParis,n_dim=100):
+    def __init__(self, kgPairs,user_set,movie_set,ratingParis,n_dim=8):
         super(PER, self).__init__()
         r_Paris = splitParis(kgPairs,movie_set)
         r_al = getAdjacencyListOfAllRelations(r_Paris)

@@ -13,10 +13,11 @@ class MultiHeadAttentionLayer( nn.Module ):
         :param n_heads: 头数
         '''
         super().__init__()
-        self.atte_layers = nn.ModuleList([ OneHeadAttention( e_dim, h_dim ) for _ in range( n_heads ) ] )
+        self.atte_layers = nn.ModuleList( [ OneHeadAttention( e_dim, h_dim ) for _ in range( n_heads ) ] )
         self.l = nn.Linear( h_dim * n_heads, e_dim)
 
     def forward( self, seq_inputs ):
+
         outs = []
         for one in self.atte_layers:
             out = one( seq_inputs )
@@ -43,7 +44,7 @@ class OneHeadAttention( nn.Module ):
         self.lV = nn.Linear( e_dim, h_dim )
 
     def forward( self, seq_inputs ):
-        #:seq_inputs [ batch, seq_lens, e_dim ]
+        #: seq_inputs [ batch, seq_lens, e_dim ]
         Q = self.lQ( seq_inputs ) #[ batch, seq_lens, h_dim ]
         K = self.lK( seq_inputs ) #[ batch, seq_lens, h_dim ]
         V = self.lV( seq_inputs ) #[ batch, seq_lens, h_dim ]
@@ -61,7 +62,7 @@ class OneHeadAttention( nn.Module ):
 class FeedForward(nn.Module):
 
     def __init__( self, e_dim, ff_dim, drop_rate = 0.1 ):
-        super().__init__()
+        super( ).__init__( )
         self.l1 = nn.Linear( e_dim, ff_dim )
         self.l2 = nn.Linear( ff_dim, e_dim )
         self.drop_out = nn.Dropout( drop_rate )
@@ -75,7 +76,7 @@ class FeedForward(nn.Module):
 class PositionalEncoding(nn.Module):
 
     def __init__( self, e_dim, dropout = 0.1, max_len = 512 ):
-        super().__init__()
+        super( ).__init__( )
         self.dropout = nn.Dropout( p = dropout )
         pe = torch.zeros( max_len, e_dim )
         position = torch.arange( 0, max_len ).unsqueeze( 1 )
@@ -107,13 +108,13 @@ class EncoderLayer(nn.Module):
         # 初始化多头注意力层
         self.attention = MultiHeadAttentionLayer( e_dim, h_dim, n_heads )
         # 初始化注意力层之后的LN
-        self.a_LN = nn.LayerNorm(e_dim)
+        self.a_LN = nn.LayerNorm( e_dim )
         # 初始化前馈神经网络层
-        self.ff_layer = FeedForward(e_dim, e_dim//2)
+        self.ff_layer = FeedForward( e_dim, e_dim//2 )
         # 初始化前馈网络之后的LN
-        self.ff_LN = nn.LayerNorm(e_dim)
+        self.ff_LN = nn.LayerNorm( e_dim )
 
-        self.drop_out = nn.Dropout(drop_rate)
+        self.drop_out = nn.Dropout( drop_rate )
 
     def forward(self, seq_inputs ):
         # seq_inputs = [batch, seqs_len, e_dim]
@@ -128,7 +129,7 @@ class EncoderLayer(nn.Module):
         return outs
 
 
-class TransformerEncoder(nn.Module):
+class TransformerEncoder( nn.Module ):
 
     def __init__(self, e_dim, h_dim, n_heads, n_layers, drop_rate = 0.1 ):
         '''

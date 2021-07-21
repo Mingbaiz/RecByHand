@@ -52,8 +52,8 @@ if __name__ == '__main__':
     entity, relationShips, pairs = readData(filepaths.FB15K_237.TEST)
     print(pairs[:5])
 
-    dataLoader = DataIter(entity,relationShips)
-    for datas in dataLoader.iter(pairs,batchSize=2):
-        print(datas)
-        import sys
-        sys.exit()
+    # dataLoader = DataIter(entity,relationShips)
+    # for datas in dataLoader.iter(pairs,batchSize=2):
+    #     print(datas)
+    #     import sys
+    #     sys.exit()

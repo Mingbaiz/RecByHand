@@ -15,6 +15,7 @@ class POLY2( nn.Module ):
         self.w1 = init.xavier_uniform_( Parameter( torch.empty( n_features, 1) ) )
         self.w2 = init.xavier_uniform_( Parameter( torch.empty( n_features, n_features) ) )
 
+
     #交叉相乘
     def crossLayer(self, x ):
         #[ batch_size, n_feats, 1 ]
