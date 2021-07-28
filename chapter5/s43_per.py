@@ -8,7 +8,6 @@ from sklearn.metrics import precision_score,recall_score,accuracy_score
 from chapter5 import dataloader4kge, s42_pathSim
 from sklearn.decomposition import NMF
 
-
 #NFM矩阵分解
 def getNFM( m, dim):
     nmf = NMF( n_components = dim )
@@ -20,7 +19,7 @@ def getNFM( m, dim):
 def splitTriples( kgTriples, movie_set ):
     '''
     :param kgTriples: 知识图谱三元组
-    :param movie_set: 包含所有电影的
+    :param movie_set: 包含所有电影的集合
     '''
     metapath_triples = {}
     for h, r, t in tqdm( kgTriples ):
@@ -34,7 +33,7 @@ def splitTriples( kgTriples, movie_set ):
 # 得到所有元路径下的实体邻接表
 def getAdjacencyListOfAllRelations( metapath_triples ):
     print('得到所有元路径下的实体邻接表...')
-    r_al = {}
+    r_al = { }
     for r in tqdm(metapath_triples):
         r_al[ r ] = s42_pathSim.getAdjacencyListByTriples( metapath_triples[ r ] )
     return r_al

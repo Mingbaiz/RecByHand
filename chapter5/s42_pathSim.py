@@ -39,9 +39,9 @@ def getAdjacencyListByTriples( triples ):
         al[h][t]=r
     return al
 
-#根据三元组得到邻接表,( 可指定关系列 )
+#根据三元组得到邻接表( 可指定关系列 )
 def getAdjacencyList( triples, r_col=1 ):
-    al = collections.defaultdict(dict)
+    al = collections.defaultdict( dict )
     for p in triples:
         h = int( p[0] )
         r = int( p[r_col] )

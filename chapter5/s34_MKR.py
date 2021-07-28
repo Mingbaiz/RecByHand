@@ -182,16 +182,16 @@ def train( epochs = 20, batchSize = 1024, lr = 0.01, dim = 128, eva_per_epochs=1
     #开始训练
     for e in range( epochs ):
         net.train()
-        all_lose = 0
+        all_loss = 0
         #同时采样用户物品三元组及知识图谱三元组数据, 但因为C单元中物品与头实体的计算过程相互干涉，所以batch_size必须一致
         for rec_set, kg_set in tqdm( zip( DataLoader( train_set, batch_size = batchSize, shuffle = True, drop_last = True),
                        DataLoader( kgTrainSet, batch_size = batchSize, shuffle = True, drop_last = True) ) ):
             optimizer.zero_grad( )
             loss = net( rec_set, kg_set  )
-            all_lose += loss
+            all_loss += loss
             loss.backward( )
             optimizer.step( )
-        print('epoch {},avg_loss={:.4f}'.format( e, all_lose/( len( train_set ))))
+        print('epoch {},avg_loss={:.4f}'.format( e, all_loss/( len( train_set ))))
 
         # 评估模型
         if e % eva_per_epochs == 0:
