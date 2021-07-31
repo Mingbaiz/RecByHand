@@ -1,10 +1,11 @@
 import numpy as np
+from chapter2 import dataloader
 from data_set import filepaths as fp
 from torch.utils.data import DataLoader
 from torch import nn
 import torch
 from sklearn.metrics import precision_score,recall_score,accuracy_score
-from data_loader import dataloader
+
 
 class ALS (nn.Module):
     def __init__(self, n_users, n_items, dim):

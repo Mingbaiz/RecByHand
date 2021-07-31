@@ -19,12 +19,12 @@ kge_weight = 0.01 #知识图谱嵌入损失函数系数
 item_update_mode='plus_transform'
 '''
 物品向量的更新模式，总共有四种：
-replace:直接用新一波预测的物品向量替代
-plus：与t-1波次的物品向量对应位相加
-replace_transform:用一个映射矩阵映射将预测的物品向量映射一下
-plus_transform：用一个映射矩阵映射将预测的物品向量映射一下后与t-1波次的物品向量对应位相加
+replace: 直接用新一波预测的物品向量替代
+plus: 与t-1波次的物品向量对应位相加
+replace_transform: 用一个映射矩阵映射将预测的物品向量映射一下
+plus_transform: 用一个映射矩阵映射将预测的物品向量映射一下后与t-1波次的物品向量对应位相加
 '''
-using_all_hops=True#最终用户向量的产生方式，是否采用全部波次的输出向量相加。否则采用最后一波产生的输出向量作为用户向量
+using_all_hops = True # 最终用户向量的产生方式，是否采用全部波次的输出向量相加。否则采用最后一波产生的输出向量作为用户向量
 
 
 class RippleNet(nn.Module):

@@ -3,7 +3,7 @@ from torch import nn
 from torch.nn import Parameter,init
 import numpy as np
 from sklearn.metrics import precision_score, recall_score, accuracy_score
-from data_loader import dataloader4ml100kOneHot
+from chapter2 import dataloader4ml100kOneHot
 
 class POLY2( nn.Module ):
     def __init__( self, n_features ):

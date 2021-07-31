@@ -1,4 +1,4 @@
-from data_loader import dataloader
+from chapter2 import dataloader
 from data_set import filepaths as fp
 from tqdm import tqdm
 from chapter2 import s2_basicSim as b_sim

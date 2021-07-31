@@ -5,7 +5,7 @@ from torch import nn
 import torch.nn.functional as F
 import torch
 from sklearn.metrics import precision_score,recall_score,accuracy_score
-from data_loader import dataloader
+from chapter2 import dataloader
 
 class ALS_MLP (nn.Module):
     def __init__(self, n_users, n_items, dim):

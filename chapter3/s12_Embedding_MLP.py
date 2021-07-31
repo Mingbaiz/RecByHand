@@ -1,6 +1,6 @@
 import numpy as np
 from sklearn.metrics import precision_score, recall_score, accuracy_score
-from data_loader import dataloader4ml100kIndexs
+from chapter2 import dataloader4ml100kIndexs
 from torch.utils.data import DataLoader
 import torch.nn.functional as F
 import torch
