@@ -51,6 +51,7 @@ class GFM( torch.nn.Module ):
             if n_hop < len( adj_lists ):
                 neighborIndexs = pd.DataFrame( range( len( df.index ) ), index = df.index )
             aggEmbeddings = self.FMaggregator(target_embs , entity_embs )
+            n_hop += 1
         # 返回最后的目标节点向量也就是指定代表这一批次的物品向量,形状为 [ batch_size, dim ]
         return aggEmbeddings
 

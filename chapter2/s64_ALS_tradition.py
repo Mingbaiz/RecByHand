@@ -1,7 +1,7 @@
 from data_set import filepaths as fp
 from tqdm import tqdm
 from utils import evaluate
-from data_loader import dataloader
+from chapter2 import dataloader
 import numpy as np
 
 class ALS():

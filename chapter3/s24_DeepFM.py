@@ -87,7 +87,7 @@ def doEva( net, test_triple ):
     acc = accuracy_score( r, y_pred )
     return precision, recall, acc
 
-def train( epochs = 20, batchSize = 1024, lr = 0.01, dim = 128, eva_per_epochs = 1 ):
+def train( epochs = 20, batchSize = 1024, lr = 0.02, dim = 128, eva_per_epochs = 1,need_eva=True ):
     #读取数据
     train_triples, test_triples, user_df, item_df,n_features= \
         dataloader4ml100kIndexs.read_data( )
@@ -96,7 +96,7 @@ def train( epochs = 20, batchSize = 1024, lr = 0.01, dim = 128, eva_per_epochs =
     #定义损失函数
     criterion = torch.nn.BCELoss( )
     #初始化优化器
-    optimizer = torch.optim.AdamW( net.parameters(), lr = lr, weight_decay = 5e-3 )
+    optimizer = torch.optim.AdamW( net.parameters(), lr = lr, weight_decay = 0.3 )
     #开始训练
     for e in range( epochs ):
         all_lose = 0
@@ -111,11 +111,12 @@ def train( epochs = 20, batchSize = 1024, lr = 0.01, dim = 128, eva_per_epochs =
         print('epoch {},avg_loss={:.4f}'.format(e,all_lose/(len(train_triples)//batchSize)))
 
         #评估模型
-        if e % eva_per_epochs == 0:
+        if e % eva_per_epochs == 0 and need_eva:
             p, r, acc = doEva(net, train_triples)
             print('train:p:{:.4f}, r:{:.4f}, acc:{:.4f}'.format( p, r, acc ))
             p, r, acc = doEva(net, test_triples)
             print('test:p:{:.4f}, r:{:.4f}, acc:{:.4f}'.format( p, r, acc ))
+    return net
 
 if __name__ == '__main__':
     train()

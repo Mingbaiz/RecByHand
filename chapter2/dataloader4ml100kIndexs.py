@@ -130,8 +130,6 @@ def read_data():
 
 
 if __name__ == '__main__':
-    #begin = generate_user_df()
-    #generate_item_df(begin,fp.Ml_100K.ITEM_DF )
     generate_item_df(0, fp.Ml_100K.ITEM_DF_0)
     read_data()
-    #print(uers)
+
