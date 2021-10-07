@@ -5,10 +5,10 @@ from torch.utils.data import DataLoader
 import torch
 from torch import nn
 
-class FNN( nn.Module ):
+class FNN_plus( nn.Module ):
 
     def __init__( self, n_features, user_df, item_df, dim = 128 ):
-        super( FNN, self ).__init__()
+        super( FNN_plus, self ).__init__()
         #随机初始化所有特征的特征向量
         self.features = nn.Embedding(n_features, dim, max_norm = 1)
         self.mlp_layer = self.__mlp(dim)
@@ -73,7 +73,7 @@ def train( epochs = 20, batchSize = 1024, lr = 0.02, dim = 128, eva_per_epochs =
     train_triples, test_triples, user_df, item_df,n_features= \
         dataloader4ml100kIndexs.read_data()
     #初始化模型
-    net = FNN( n_features,user_df, item_df, dim )
+    net = FNN_plus( n_features,user_df, item_df, dim )
     #定义损失函数
     criterion = torch.nn.BCELoss()
     #初始化优化器
