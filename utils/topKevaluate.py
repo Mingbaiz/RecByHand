@@ -2,6 +2,7 @@ import collections
 import matplotlib.pyplot as plt
 import numpy as np
 from enum import Enum
+import os
 
 
 #------------------调整数据部分----------------------------#
@@ -238,7 +239,7 @@ def __fromModelDct2EvaDct( dct ):
     return eva_dct
 
 # 画出topK函数图
-def drawPlot( dct, ks ):
+def drawPlot( dct, ks, saveDirPath=None,needShow=True ):
     eva_dct = __fromModelDct2EvaDct(dct)
     colors = ['red', 'blue', 'green', 'yellow', 'brown', 'hotpink', 'gold','aqua','purple','limegreen','beige']
     for eva in eva_dct:
@@ -250,9 +251,13 @@ def drawPlot( dct, ks ):
             color_index+=1
         plt.xlabel('K',fontsize=14)
         plt.ylabel('{}@K'.format(eva),fontsize=14)
-        plt.legend(fontsize = 20)
+        plt.legend(fontsize = 16,loc = 'upper left')
         plt.grid()
-        plt.show()
+        if saveDirPath:
+            path_name = '{}.png'.format(eva)
+            plt.savefig(os.path.join(saveDirPath,path_name ))
+        if needShow:
+            plt.show()
 
 #---------------------------------------------------#
 

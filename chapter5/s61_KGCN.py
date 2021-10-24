@@ -6,8 +6,6 @@ from chapter5 import dataloader4kge, dataloader4KGNN
 from utils import evaluate
 from torch.utils.data import DataLoader
 
-
-
 class KGCN( nn.Module ):
 
     def __init__( self, n_users, n_entitys, n_relations,
