@@ -58,7 +58,7 @@ class GAFM( torch.nn.Module ):
         atts = torch.softmax( embs, dim=1 )
         return atts
 
-    def gnnForward( self, adj_lists,user_embs=None ):
+    def gnnForward( self, adj_lists, user_embs = None ):
         n_hop = 0
         for df in adj_lists:
             if n_hop == 0:
@@ -66,24 +66,24 @@ class GAFM( torch.nn.Module ):
             else:
                 entity_embs = self.__getEmbeddingByNeibourIndex( df.values, neighborIndexs, aggEmbeddings )
             target_embs = self.entitys( torch.LongTensor( df.index) )
-            aggEmbeddings = self.FMaggregator(entity_embs)
+            aggEmbeddings = self.FMaggregator( entity_embs )
             if self.atten_way == 'item':
                 # item参与注意力计算 [batch_size, dim]
-                atts = self.attention(aggEmbeddings, target_embs)
-                if n_hop < len(adj_lists):
-                    neighborIndexs = pd.DataFrame(range(len(df.index)), index=df.index)
+                atts = self.attention( aggEmbeddings, target_embs )
+                if n_hop < len( adj_lists ):
+                    neighborIndexs = pd.DataFrame( range( len( df.index ) ), index = df.index )
             elif self.atten_way == 'user':
-                if n_hop < len(adj_lists):
-                    neighborIndexs = pd.DataFrame(range(len(df.index)), index=df.index)
+                if n_hop < len( adj_lists ):
+                    neighborIndexs = pd.DataFrame( range( len( df.index ) ), index = df.index )
                     # 最后一层之前的注意力仍然采用item形式的即可
-                    atts = self.attention(aggEmbeddings, target_embs)
+                    atts = self.attention( aggEmbeddings, target_embs )
                 else:
                     # 用户的向量参与注意力计算[ batch_size, dim ]
-                    atts = self.attention(aggEmbeddings, user_embs)
+                    atts = self.attention( aggEmbeddings, user_embs )
             else:
-                atts = self.attention(aggEmbeddings)
-                if n_hop < len(adj_lists):
-                    neighborIndexs = pd.DataFrame(range(len(df.index)), index=df.index)
+                atts = self.attention( aggEmbeddings )
+                if n_hop < len( adj_lists ):
+                    neighborIndexs = pd.DataFrame( range( len( df.index ) ), index = df.index )
 
             aggEmbeddings = atts * aggEmbeddings + target_embs
             n_hop +=1
