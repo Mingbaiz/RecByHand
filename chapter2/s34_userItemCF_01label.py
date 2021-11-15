@@ -5,6 +5,17 @@ from chapter2 import s2_basicSim as b_sim
 from utils import evaluate
 import collections
 
+'''
+# 对应 2.3.4 章节
+def getSet( triples ):
+    user_items = collections.defaultdict( set )
+    for u, i, r in triples:
+        if r == 1:
+            user_items[u].add(i)
+    return user_items
+'''
+
+# 对应 2.4.4 章节
 #集合形式读取数据, 返回{uid1:{iid1,iid2,iid3}}
 def getSet( triples ):
     #用户喜欢的物品集
