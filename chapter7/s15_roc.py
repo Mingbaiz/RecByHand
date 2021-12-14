@@ -6,8 +6,13 @@ import numpy as np
 def getRandomTrueList(n):
     return [random.choice([0,1]) for _ in range(n)]
 
-def getRandomPredList(trues):
-    adjust = 0.1
+def getRandomPredList(trues, adjust=0.5):
+    '''
+    :param trues: 模拟真实的坐标
+    :param adjust: 调整系数，0-1，越靠近1则预测值更接近真实
+    :return: 模拟预测的坐标
+    '''
+    adjust = adjust-0.5
     return [random.random()+ (adjust if t ==1 else -adjust)
             for t in trues]
 
@@ -67,11 +72,13 @@ def getRocCurve( t, p ):
 
 def drawRoc( fprs, tprs ):
     plt.figure( )
-    plt.plot( fprs, tprs, 'r' )
+    plt.plot( fprs, tprs, 'black',marker='*',label='ROC' )
     #中间蓝线的坐标
+
     middle_x = np.linspace( 0, 1, len( fprs ) )
     middle_y = np.linspace( 0, 1, len( fprs ) )
-    plt.plot( middle_x, middle_y, 'b' )
+    plt.plot( middle_x, middle_y, 'black', marker='.',label='Diagonal' )
+    plt.legend(fontsize=12, loc='upper left')
     plt.xlabel( "FPR" )
     plt.ylabel( "TPR" )
     plt.grid( )
@@ -82,8 +89,8 @@ def drawRoc( fprs, tprs ):
 
 if __name__ == '__main__':
 
-    trues = getRandomTrueList(20)
-    preds = getRandomPredList(trues)
+    trues = getRandomTrueList(100)
+    preds = getRandomPredList(trues,0.2)
 
     # fprs, tprs = getRocCurve(trues, preds)
     # drawRoc(fprs,tprs)

@@ -242,15 +242,17 @@ def __fromModelDct2EvaDct( dct ):
 def drawPlot( dct, ks, saveDirPath=None,needShow=True ):
     eva_dct = __fromModelDct2EvaDct(dct)
     colors = ['red', 'blue', 'green', 'yellow', 'brown', 'hotpink', 'gold','aqua','purple','limegreen','beige']
+    #colors = ['black','black','black','black','black','black','black','black','black','black','black']
+    markers=['o','*','^','x','P','+','1','s','v','p','X']
     for eva in eva_dct:
         plt.figure()
-        color_index = 0
+        index = 0
         for model in eva_dct[eva]:
             y = eva_dct[eva][model]
-            plt.plot(ks, y, color = colors[color_index],marker='o',label=model)
-            color_index+=1
-        plt.xlabel('K',fontsize=14)
-        plt.ylabel('{}@K'.format(eva),fontsize=14)
+            plt.plot( ks, y, color = colors[index], marker=markers[index], label=model )
+            index+=1
+        plt.xlabel('K', fontsize = 14 )
+        plt.ylabel('{}@K'.format(eva), fontsize = 14 )
         plt.legend(fontsize = 16,loc = 'upper left')
         plt.grid()
         if saveDirPath:
