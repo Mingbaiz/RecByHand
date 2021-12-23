@@ -1,7 +1,7 @@
 import numpy as np
 
 def svd(data,k):
-    u,i,v = np.linalg.svd(data)
+    u,i,v = np.linalg.svd(data) #numpy里的SVD函数
     u=u[:,0:k]
     i=np.diag(i[0:k])
     v=v[0:k,:]
