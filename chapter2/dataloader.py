@@ -16,4 +16,3 @@ def readRecData(path,test_ratio = 0.1):
 
     #返回用户集合列表，物品集合列表，与用户，物品，评分三元组列表
     return list(user_set),list(item_set),train_set,test_set
-

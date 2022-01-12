@@ -5,17 +5,8 @@ from chapter2 import s2_basicSim as b_sim
 from utils import evaluate
 import collections
 
-'''
-# 对应 2.3.4 章节
-def getSet( triples ):
-    user_items = collections.defaultdict( set )
-    for u, i, r in triples:
-        if r == 1:
-            user_items[u].add(i)
-    return user_items
-'''
 
-# 对应 2.4.4 章节
+
 #集合形式读取数据, 返回{uid1:{iid1,iid2,iid3}}
 def getSet( triples ):
     #用户喜欢的物品集
@@ -121,10 +112,13 @@ def evaluation( test_set, user_neg_items, pred_set ):
 if __name__ == '__main__':
     _, _, train_set, test_set = dataloader.readRecData(fp.Ml_100K.RATING, test_ratio=0.1)
     user_items_train, item_users_train, _ ,user_all_items= getSet(train_set)
+
     user_pos_items_test, _, user_neg_items_test,_ = getSet(test_set)
+
     recomedations_by_userCF = trainUserCF( user_items_train, b_sim.cos4set, user_all_items, k=5 )
     recomedations_by_itemCF = trainItemCF( item_users_train, b_sim.cos4set, user_all_items, k=5 )
 
+    print(user_pos_items_test)
     print('user_CF')
     evaluation( user_pos_items_test, user_neg_items_test , recomedations_by_userCF )
     print('item_CF')

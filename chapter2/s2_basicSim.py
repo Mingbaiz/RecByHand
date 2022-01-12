@@ -2,7 +2,7 @@ import numpy as np
 
 #CN相似度 (common neighbors)
 def CN(set1,set2):
-    return len(set1&set2)
+    return len( set1 & set2 )
 
 #Jaccard相似度
 def Jaccard(set1,set2):
@@ -32,15 +32,18 @@ def pearsonSimple( v1, v2 ):
 
 
 if __name__ == '__main__':
-    s1 = { 1, 2, 4, 7, 8 }
+
+    a={1,2,3}
+    b={2,3,4}
+
     a=[1, 3, 2]
     b=[8, 9, 1]
-    #c=[8, 9, 0]
+
+    #a=[1,2,3]
+    #b=[8,1,9]
 
     print(cos4vector(a,b))
-    #print(cos4vector(b,c))
-    #print(cos4vector(a,c))
-
+    print(pearson(a,b))
     print(pearsonSimple(a,b))
-    #print(pearsonSimple(b, c))
-    #print(pearsonSimple(a, c))
+    # #print(pearsonSimple(b, c))
+    # #print(pearsonSimple(a, c))
