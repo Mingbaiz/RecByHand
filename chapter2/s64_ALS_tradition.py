@@ -13,10 +13,10 @@ class ALS():
         :param dim: 隐因子数量或者称隐向量维度
         '''
         #首先初始化用户矩阵，物品矩阵，用户偏置项及物品偏置项
-        self.p = np.random.uniform( size = ( n_users, dim) )
-        self.q = np.random.uniform( size = ( n_items, dim) )
-        self.bu = np.random.uniform( size = ( n_users, 1) )
-        self.bi = np.random.uniform( size = ( n_items, 1) )
+        self.p = np.random.uniform( size = ( n_users, dim ) )
+        self.q = np.random.uniform( size = ( n_items, dim ) )
+        self.bu = np.random.uniform( size = ( n_users, 1 ) )
+        self.bi = np.random.uniform( size = ( n_items, 1 ) )
 
     def forward(self,u,i):
         '''

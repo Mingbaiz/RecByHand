@@ -8,7 +8,7 @@ def getPopularity(data_sets):
     p = dict()
     for id in data_sets:
         frequency = len(data_sets[id])
-        ppl = math.log1p(frequency)#即ln(1+x)
+        ppl = math.log1p(frequency)#即 ln(1+x)
         p[id] = ppl #得到流行度并记录起来
     return p
 
