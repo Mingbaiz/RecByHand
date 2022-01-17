@@ -81,17 +81,16 @@ def trainItemCF( user_items_train, item_users_train, k = 5 ):
     recomedations = get_recomedations_by_itemCF( item_sims, user_items_train )
     return recomedations
 
-
 if __name__ == '__main__':
-    _, _, train_set, test_set = dataloader.readRecData(fp.Ml_100K.RATING5, test_ratio=0.1)
-    user_items_train, item_users_train = getDict(train_set)
-    user_pos_items = userCF.getSet(train_set)
+    _, _, train_set, test_set = dataloader.readRecData( fp.Ml_100K.RATING5, test_ratio=0.1 )
+    user_items_train, item_users_train = getDict( train_set )
+    user_pos_items = userCF.getSet( train_set )
 
     recomedations_by_userCF = trainUserCF( user_items_train, user_pos_items, k=5 )
-    print(recomedations_by_userCF)
+    print( recomedations_by_userCF )
 
     recomedations_by_itemCF = trainItemCF( user_items_train, item_users_train, k=5 )
-    print(recomedations_by_itemCF)
+    print( recomedations_by_itemCF )
 
 
 

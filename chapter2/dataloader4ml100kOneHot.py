@@ -104,6 +104,9 @@ class DataIter():
 
 if __name__ == '__main__':
     x_train, x_test, y_train, y_test = read_data()
+
+
+
     print(x_train[:5])
     print(y_train[:5])
 

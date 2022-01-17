@@ -66,7 +66,7 @@ def train( epochs = 10, batchSize = 1024, lr = 0.01, dim = 64, eva_per_epochs = 
     for e in range(epochs):
         all_lose = 0
         #每一批次地读取数据
-        for u, i, r in DataLoader(train_set,batch_size = batchSize, shuffle = True):
+        for u, i, r in DataLoader(train_set, batch_size = batchSize, shuffle = True):
             optimizer.zero_grad()
             r = torch.FloatTensor(r.detach().numpy())
             result = net(u,i)

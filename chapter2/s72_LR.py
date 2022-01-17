@@ -11,7 +11,7 @@ class LR( nn.Module ):
         :param n_features: 特征数量
         '''
         super(LR, self).__init__()
-        self.b = init.xavier_uniform_( Parameter( torch.empty( 1, 1) ) )
+        self.b = init.xavier_uniform_( Parameter( torch.empty( 1, 1 ) ) )
         self.w = init.xavier_uniform_( Parameter( torch.empty( n_features, 1) ) )
 
     def forward( self, x ):

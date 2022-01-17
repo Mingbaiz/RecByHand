@@ -62,6 +62,7 @@ def train( epochs = 20, batchSize = 1024, lr = 0.01, dim = 128, eva_per_epochs =
     #读取数据
     train_triples, test_triples, user_df, item_df,n_features= \
         dataloader4ml100kIndexs.read_data()
+
     #初始化模型
     net = FM( n_features, dim )
     #定义损失函数

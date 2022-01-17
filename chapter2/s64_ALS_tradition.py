@@ -74,7 +74,8 @@ def train(epochs = 20, batchSize = 1024, lr = 0.01, lamda = 0.1, factors_dim = 6
     :param factors_dim: 隐因子数量
     :return:
     '''
-    user_set, item_set, train_set, test_set = dataloader.readRecData( fp.Ml_100K.RATING, test_ratio = 0.1 )
+    user_set, item_set, train_set, test_set = dataloader.readRecData( fp.Ml_100K.RATING5, test_ratio = 0.1 )
+
     #初始化ALS模型
     als = ALS( len(user_set), len(item_set), factors_dim )
     #初始化批量提出数据的迭代器
@@ -96,3 +97,4 @@ def train(epochs = 20, batchSize = 1024, lr = 0.01, lamda = 0.1, factors_dim = 6
 
 if __name__ == '__main__':
     train()
+

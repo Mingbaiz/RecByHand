@@ -59,6 +59,7 @@ class ALS_MLP (nn.Module):
 
         uv = torch.sum( u*v, axis = 1)
         logit = self.sigmoid(uv*3)
+
         return logit
 
 def doEva(net, d):
