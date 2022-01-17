@@ -130,6 +130,8 @@ def read_data():
 
 
 if __name__ == '__main__':
-    generate_item_df(0, fp.Ml_100K.ITEM_DF_0)
-    read_data()
+    item_df = generate_item_df(0, fp.Ml_100K.ITEM_DF_0)
+    print(item_df)
+
+    #read_data()
 
