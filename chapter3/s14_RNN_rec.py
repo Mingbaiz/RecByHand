@@ -16,13 +16,13 @@ class RNN_rec( nn.Module ):
         self.items = nn.Embedding( n_items, dim, max_norm = 1 )
         self.rnn = nn.RNN( dim, hidden_size, batch_first = True )
         self.dense = self.dense_layer( hidden_size, 1 )
-        self.sigmoid = nn.Sigmoid()
+        #self.sigmoid = nn.Sigmoid()
 
     # 全连接层
     def dense_layer(self,in_features,out_features):
         return nn.Sequential(
             nn.Linear(in_features, out_features),
-            nn.Tanh())
+            nn.Sigmoid())
 
     def forward(self, x, isTrain = True):
         # [batch_size, len_seqs, dim]
@@ -31,14 +31,14 @@ class RNN_rec( nn.Module ):
         _,h = self.rnn(item_embs)
         # [batch_size, hidden_size]
         h = torch.squeeze(h)
+        # 训练时采取dropout来防止过拟合
+        if isTrain: h = F.dropout(h)
         #[batch_size, 1]
         out = self.dense(h)
-        #训练时采取dropout来防止过拟合
-        if isTrain: out = F.dropout(out)
         # [batch_size]
         out = torch.squeeze(out)
-        logit = self.sigmoid(out)
-        return logit
+        #logit = self.sigmoid(out)
+        return out
 
 #做评估
 def doEva(net,test_triple):

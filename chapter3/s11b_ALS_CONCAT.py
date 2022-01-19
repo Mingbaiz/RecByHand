@@ -49,11 +49,10 @@ class ALS_MLP ( nn.Module ):
         uv = self.denseLayer1( uv )
         # [batch_size, dim//2]
         uv = self.denseLayer2( uv )
-        #[batch_size,1]
-        uv = self.denseLayer3( uv )
-
         #训练时采取dropout来防止过拟合
         if isTrain:uv = F.dropout( uv )
+        #[batch_size,1]
+        uv = self.denseLayer3( uv )
         # [batch_size]
         uv = torch.squeeze( uv )
 

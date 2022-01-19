@@ -12,13 +12,12 @@ class RNN_rec( nn.Module ):
     def __init__( self, n_items, dim = 128):
         super( RNN_rec, self ).__init__()
         self.n_items = n_items
-        # 随机初始化所有特征的特征向量
+        # 随机初始化所有物品的物品向量
         self.items = nn.Embedding( n_items, dim, max_norm = 1 )
         self.rnn = nn.RNN( dim, dim, batch_first = True )
 
         # 初始化历史序列预测的全连接层及损失函数等
         self.ph_dense = self.dense_layer( dim, n_items )
-        self.softmax = nn.Softmax()
         self.crossEntropyLoss = nn.CrossEntropyLoss()
 
         # 初始化推荐预测损失函数等
@@ -29,7 +28,7 @@ class RNN_rec( nn.Module ):
     def dense_layer(self,in_features,out_features):
         return nn.Sequential(
             nn.Linear(in_features, out_features),
-            nn.Tanh())
+            nn.Softmax())
 
     #历史物品序列预测的前向传播
     def forwardPredHistory( self, outs, history_seqs ):
@@ -62,7 +61,7 @@ class RNN_rec( nn.Module ):
         '''
         :param x: 输入序列
         :param history_seqs: 要预测的序列，其实就是与x错开一位的历史记录
-        :param item: 候选物品序列
+        :param item: 候选物品
         :param y: 0或1的标注
         :return: 联合训练的总损失函数值
         '''

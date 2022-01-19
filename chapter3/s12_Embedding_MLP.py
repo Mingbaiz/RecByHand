@@ -18,7 +18,7 @@ class embedding_mlp( nn.Module ):
         self.user_df = user_df
         self.item_df = item_df
 
-        # 得到用户和物品特征的数量的和
+        # 得到用户和物品特征种类数量的和
         total_neigbours = user_df.shape[1] + item_df.shape[1]
         # 定义MLP传播的全连接层
         self.dense1 = self.dense_layer( dim * total_neigbours, dim * total_neigbours//2 )
@@ -54,10 +54,11 @@ class embedding_mlp( nn.Module ):
         uv = self.dense1(uv)
         # [batch_size, dim]
         uv = self.dense2(uv)
-        # [batch_size, 1]
-        uv = self.dense3(uv)
         #训练时采取dropout来防止过拟合
         if isTrain: uv = F.dropout(uv)
+        # [batch_size, 1]
+        uv = self.dense3(uv)
+
         # [batch_size]
         uv = torch.squeeze(uv)
         logit = self.sigmoid(uv)

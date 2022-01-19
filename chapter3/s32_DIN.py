@@ -16,6 +16,7 @@ class DIN( nn.Module ):
         super( DIN, self ).__init__()
         # 随机初始化所有物品向量
         self.items = nn.Embedding( n_items, dim, max_norm = 1 )
+
         self.fliner = nn.Linear( dim * 2, 1 )
         # 注意力计算中的线性层
         self.attention_liner = nn.Linear( dim, t )
@@ -53,11 +54,11 @@ class DIN( nn.Module ):
         one_item = self.items(item)
         # [ batch_size, dim*2 ]
         out = torch.cat( [ sumWeighted, one_item ], dim = 1 )
+        # 训练时采取dropout来防止过拟合
+        if isTrain: out = F.dropout(out)
         # [ batch_size, 1 ]
         out = self.fliner( out )
         out = self.Dice( out )
-        #训练时采取dropout来防止过拟合
-        if isTrain: out = F.dropout( out )
         # [ batch_size ]
         out = torch.squeeze( out )
         logit = torch.sigmoid( out )

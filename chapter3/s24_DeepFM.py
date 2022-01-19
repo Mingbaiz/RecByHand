@@ -14,7 +14,7 @@ class DeepFM( nn.Module ):
         # 记录好用户和物品的特征索引
         self.user_df = user_df
         self.item_df = item_df
-        # 得到用户和物品特征的数量的和
+        # 得到用户和物品特征类别数量的和
         total_neigbours = user_df.shape[1] + item_df.shape[1]
         #初始化MLP层
         self.mlp_layer = self.__mlp( dim * total_neigbours )

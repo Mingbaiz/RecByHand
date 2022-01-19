@@ -55,11 +55,10 @@ class embedding_CNN( nn.Module ):
         # 开始MLP的传播
         # [batch_size, dim//2]
         uv = self.dense1(uv)
-        # [batch_size, 1]
-        uv = self.dense2(uv)
-
         #训练时采取dropout来防止过拟合
         if isTrain: uv = F.dropout(uv)
+        # [batch_size, 1]
+        uv = self.dense2(uv)
         # [batch_size]
         uv = torch.squeeze(uv)
         logit = self.sigmoid(uv)

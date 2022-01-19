@@ -19,7 +19,7 @@ class Base_Sequential( nn.Module ):
     def dense_layer( self, in_features, out_features ):
         return nn.Sequential(
             nn.Linear( in_features, out_features ),
-            nn.Tanh() )
+            nn.Sigmoid() )
 
     def forward( self, x, item, isTrain = True ):
         # [ batch_size, len_seqs, dim ]
@@ -30,14 +30,13 @@ class Base_Sequential( nn.Module ):
         one_item = self.items( item )
         # [ batch_size, dim*2 ]
         out = torch.cat( [ sumPool, one_item ], dim = 1)
+        # 训练时采取dropout来防止过拟合
+        if isTrain: out = F.dropout(out)
         # [ batch_size, 1 ]
         out = self.dense( out )
-        # 训练时采取dropout来防止过拟合
-        if isTrain: out = F.dropout( out )
         # [ batch_size ]
         out = torch.squeeze( out )
-        logit = torch.sigmoid( out )
-        return logit
+        return out
 
 
 
