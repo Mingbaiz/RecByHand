@@ -65,7 +65,6 @@ class OneHeadAttention( nn.Module ):
         # 将对应Mask序列中0的位置变为-1e9,意为遮盖掉此处的值
         if mask is not None:
             QK = QK.masked_fill( mask == 0, -1e9 )
-
         # [ batch, seq_lens, seq_lens ]
         a = torch.softmax( QK, dim = -1 )
         # [ batch, seq_lens, h_dim ]
@@ -179,7 +178,7 @@ def subsequent_mask( size ):
     return subsequent_mask
 
 
-#编码层
+#解码层
 class DecoderLayer(nn.Module):
 
     def __init__( self, e_dim, h_dim, n_heads, drop_rate = 0.1 ):
@@ -235,7 +234,7 @@ class TransformerDecoder(nn.Module):
         :param e_dim: 输入向量的维度
         :param h_dim: 注意力层中间隐含层的维度
         :param n_heads: 多头注意力的头目数量
-        :param n_layers: 编码层的数量
+        :param n_layers: 解码层的数量
         :param drop_rate: drop out的比例
         '''
         super().__init__()

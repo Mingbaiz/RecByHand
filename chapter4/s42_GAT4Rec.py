@@ -64,7 +64,7 @@ class GAT4Rec( torch.nn.Module ):
         n_hop = 0
         for df in adj_lists:
             if n_hop == 0:
-                #最外阶的聚合可直接通过初始索引提取
+                #最外阶的聚合可直接通过初始索引提取 [ 图采样时的某一阶的中心节点数量, neibours, dim ]
                 entity_embs = self.entitys( torch.LongTensor( df.values ) )
             else:
                 '''第二次开始聚合的邻居向量是第一次聚合后得到的，所以不能直接用self.entitys去提取，
@@ -73,11 +73,12 @@ class GAT4Rec( torch.nn.Module ):
                 所以需要一个记录初始索引映射到更新后索引的映射表neighbourIndexs。通过这些内容提取向
                 量的具体操作可详见self.__getEmbeddingByNeibourIndex()这个方法'''
                 entity_embs = self.__getEmbeddingByNeibourIndex( df.values, neighborIndexs, aggEmbeddings )
+            # [图采样时的某一阶的中心节点数量, dim ]
             target_embs = self.entitys( torch.LongTensor( df.index ) )
             if n_hop < len( adj_lists ):
                 neighborIndexs = pd.DataFrame( range( len( df.index ) ), index = df.index )
             # 将得到的目标节点向量与其邻居节点向量传入GAT的多头注意力层聚合出更新后的目标节点向量
-
+            # [图采样时的某一阶的中心节点数量, dim ]
             aggEmbeddings = self.multiHeadAttentionAggregator( target_embs, entity_embs )
         # 返回最后的目标节点向量也就是指定代表这一批次的物品向量,形状为 [ batch_size, dim ]
         return aggEmbeddings

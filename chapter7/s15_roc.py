@@ -56,6 +56,7 @@ def getRocCurve( t, p ):
     :param p: 预测分数
     :return: TPR列表与FPR列表
     '''
+
     # 将所有预测分数从大到小排序作为阈值集
     thresholds = sorted( p, reverse = True )
     # 加入一个高阈值在首位是为了产生一个 ( 0, 0 )坐标的点
@@ -90,10 +91,10 @@ def drawRoc( fprs, tprs ):
 if __name__ == '__main__':
 
     trues = getRandomTrueList(100)
-    preds = getRandomPredList(trues,0.2)
+    preds = getRandomPredList(trues,0.8)
 
-    # fprs, tprs = getRocCurve(trues, preds)
-    # drawRoc(fprs,tprs)
+    fprs, tprs = getRocCurve(trues, preds)
+    drawRoc(fprs,tprs)
 
     fprs, tprs = getRocCurveSK(trues,preds)
     drawRoc(fprs, tprs)

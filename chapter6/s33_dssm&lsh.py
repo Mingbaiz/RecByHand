@@ -131,4 +131,4 @@ def doRecall( ):
     return recall_dict
 
 if __name__ == '__main__':
-    doRecall( )
+    print(doRecall( ))

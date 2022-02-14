@@ -13,7 +13,7 @@ class GCN4Rec( torch.nn.Module ):
     def __init__( self, n_users, n_entitys, dim, hidden_dim ):
         '''
         :param n_users: 用户数量
-        :param n_entitys: 实体数量
+        :param n_entitys: 实体数量(物品+物品特征)
         :param dim: 向量维度
         :param hidden_dim: 隐藏层维度
         '''
@@ -21,7 +21,7 @@ class GCN4Rec( torch.nn.Module ):
 
         # 随机初始化所有用户向量
         self.users = nn.Embedding( n_users, dim, max_norm = 1 )
-        # 随机初始化所有节点向量，其中包含了物品的向量
+        # 随机初始化所有节点向量，其中包含了实体的向量
         self.entitys = nn.Embedding( n_entitys, dim, max_norm = 1 )
 
         # 记录下所有节点索引
@@ -78,7 +78,7 @@ def train(epoch=20,batchSize=1024,dim=128,hidden_dim=64,lr=0.01,eva_per_epochs=1
 
     # 读取所有节点索引及表示物品全量图的边集对
     entitys, pairs = dataloader4graph.readGraphData()
-    # 传入边集对得到networkx的图结构数据
+    # 传入边集得到networkx的图结构数据
     G = dataloader4graph.get_graph( pairs )
 
     net = GCN4Rec( max(user_set)+1, max(entitys)+1, dim, hidden_dim )

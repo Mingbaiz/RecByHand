@@ -92,9 +92,11 @@ def getTrainAndTestSeqsWithNeg(seqInPath, test_ratio=0.1):
 
 
 if __name__ == '__main__':
-    genrateRecSeq(fp.Ml_latest_small.RATING_TS,fp.Ml_latest_small.SEQS)
+    #genrateRecSeq(fp.Ml_latest_small.RATING_TS,fp.Ml_latest_small.SEQS)
     #print(getTrainAndTestSeqs(fp.Ml_latest_small.SEQS))
     #
     #genrateRecSeqWithNeg(fp.Ml_latest_small.RATING_TS,fp.Ml_latest_small.SEQS_NEG)
-    getTrainAndTestSeqsWithNeg(fp.Ml_latest_small.SEQS_NEG)
 
+
+    train, test, allItems = getTrainAndTestSeqsWithNeg(fp.Ml_latest_small.SEQS_NEG)
+    print(train)

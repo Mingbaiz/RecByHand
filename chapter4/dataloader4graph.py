@@ -17,6 +17,7 @@ def readGraphData( path = fp.Ml_100K.KG ):
         pairs.append( ( int( h ),int( t ) ) )
     return list( entity_set ), list( set( pairs ) )
 
+
 def readRecData( path = fp.Ml_100K.RATING, test_ratio = 0.1 ):
     print( '读取用户评分三元组...' )
     user_set, item_set = set( ), set( )

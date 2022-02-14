@@ -86,3 +86,5 @@ if __name__=='__main__':
     print(getSimMatrixFromCoMatrix(M))
     print(getAdjacencyList(triples))
     print(getSimMatrixFromAl(getAdjacencyList(triples),4))
+
+

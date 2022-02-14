@@ -19,5 +19,6 @@ if __name__ == '__main__':
     fprs,tprs = s15_roc.getRocCurveSK(t,p)
     print(getAuc(fprs,tprs ))
     print(auc(fprs,tprs))
+
     print(getRocAuc(t,p))
     print(roc_auc_score(t,p))

@@ -112,7 +112,6 @@ class RippleNet(nn.Module):
         '''
         h_emb_list,r_emb_list,t_emb_list是水波采样的实体与关系集，三者间位置是对应的
         '''
-
         kge_loss = 0
         for hop in range( self.n_hop ):
             # [batch size, n_memory, 1, dim]
@@ -126,27 +125,6 @@ class RippleNet(nn.Module):
             kge_loss += torch.sigmoid( hRt ).mean( )
         kge_loss = -self.kge_weight * kge_loss
         return kge_loss
-
-    def _key_addressing(self, h_emb_list, r_emb_list, t_emb_list, item_embeddings):
-        o_list = []
-        for hop in range(self.n_hop):
-            # [batch_size, n_memory, dim, 1]
-            h_expanded = torch.unsqueeze(h_emb_list[hop], dim=3)
-            # [batch_size, n_memory, dim]
-            Rh = torch.squeeze(torch.matmul(r_emb_list[hop], h_expanded))
-            # [batch_size, dim, 1]
-            v = torch.unsqueeze(item_embeddings, dim=2)
-            # [batch_size, n_memory]
-            probs = torch.squeeze(torch.matmul(Rh, v))
-            # [batch_size, n_memory]
-            probs_normalized = F.softmax(probs, dim=1)
-            # [batch_size, n_memory, 1]
-            probs_expanded = torch.unsqueeze(probs_normalized, dim=2)
-            # [batch_size, dim]
-            o = (t_emb_list[hop] * probs_expanded).sum(dim=1)
-            item_embeddings = self._update_item_embedding(item_embeddings, o)
-            o_list.append(o)
-        return o_list, item_embeddings
 
     # 迭代物品的向量
     def _update_item_embedding( self, item_embeddings, o ):
@@ -178,20 +156,6 @@ class RippleNet(nn.Module):
             for i in range(self.n_hop - 1):
                 user_embs += o_list[i]
         return user_embs
-
-
-    # 做预测时用
-    def forward_predict(self,items: torch.LongTensor,memories):
-        memories_h,memories_r,memories_t=memories
-        item_embeddings = self.entity_emb(items)
-        h_emb_list,r_emb_list,t_emb_list = [],[],[]
-        for i in range(self.n_hop):
-            h_emb_list.append(self.entity_emb(memories_h[i]))
-            r_emb_list.append(self.relation_emb(memories_r[i]).view(-1, self.n_memory, self.dim, self.dim))
-            t_emb_list.append(self.entity_emb(memories_t[i]))
-        o_list, item_embeddings = self._key_addressing(h_emb_list, r_emb_list, t_emb_list, item_embeddings)
-        scores = self.predict(item_embeddings, o_list)
-        return scores
 
 # 得到模型训练需要的数据
 def get_feed_dict(data, ripple_set):
@@ -282,7 +246,7 @@ def train(n_epoch=n_epoch,batch_size=batch_size,eva_per_epochs=1):
         net.train()
         all_loss = 0
         # 每个epoch都重新生成水波集
-        ripple_set = get_ripple_set(kg_indexs,user_history_pos_dict)
+        ripple_set = get_ripple_set(kg_indexs, user_history_pos_dict)
         for dataset in tqdm(DataLoader(train_set, batch_size=batch_size, shuffle=True)):
             return_dict = net(*get_feed_dict(dataset, ripple_set))
             loss = return_dict["loss"]

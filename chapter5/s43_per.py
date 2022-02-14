@@ -27,7 +27,7 @@ def splitTriples( kgTriples, movie_set ):
             h, r, t = int( h ), int( r ), int( t )
             if r not in metapath_triples:
                 metapath_triples[ r ] = [ ]
-            metapath_triples[ r ].append( [ h, 1, t ] )
+            metapath_triples[ r ].append( [ h,1, t ] )
     return metapath_triples
 
 # 得到所有元路径下的实体邻接表
@@ -44,7 +44,7 @@ def getSimMatrixOfAllRelations( metapath_al, movie_set ):
     metapath_simMatrixs = { }
     for r in tqdm(metapath_al):
         metapath_simMatrixs[r]=\
-            s42_pathSim.getSimMatrixFromAl( metapath_al[r], max(movie_set)+1 )
+            s42_pathSim.getSimMatrixFromAl( metapath_al[r], max(movie_set)+1)
     return metapath_simMatrixs
 
 class PER(nn.Module):
@@ -57,10 +57,8 @@ class PER(nn.Module):
         metapath_al = getAdjacencyListOfAllRelations( metapath_triples )
         # 根据邻接表得到各个元路径下的路径相似度矩阵
         metapath_simMatrixs = getSimMatrixOfAllRelations( metapath_al, movie_set )
-
         print("计算用户偏好扩散矩阵...")
         sortedUserItemSims, self.metapath_map = self.init_userItemSims( user_set, recTriples, metapath_simMatrixs )
-
         print( '初始化用户物品在每个元路径下的embedding...' )
         self.embeddings = self.init_embedding( dim, sortedUserItemSims, self.metapath_map )
 

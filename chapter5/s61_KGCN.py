@@ -109,8 +109,6 @@ def train( epochs = 20, batchSize = 1024, lr = 0.01, dim = 128, n_neighbors=10, 
     kg_indexes = dataloader4KGNN.getKgIndexsFromKgTriples(kgTriples)
 
     adj_entity, adj_relation = dataloader4KGNN.construct_adj(n_neighbors, kg_indexes, len(entitys))
-
-
     net = KGCN( max(users)+1, max(entitys)+1, max(relations)+1,
                   dim, adj_entity, adj_relation,n_neighbors = n_neighbors)
     optimizer = torch.optim.Adam( net.parameters(), lr = lr, weight_decay = 5e-4 )

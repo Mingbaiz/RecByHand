@@ -116,4 +116,6 @@ if __name__ == '__main__':
     lsh = LSH( 4, 3, 6 )
 
     recall_dict=lsh.getRecalls(u,x)
+
+    #注意用户与物品的向量拼接后，向量的索引位置用户在前，物品在后。
     print(recall_dict)

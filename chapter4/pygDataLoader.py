@@ -12,6 +12,8 @@ if __name__ == '__main__':
     print( '类别数:', dataset.num_classes )
     print( '特征维度:', dataset.num_features )
     print( dataset.data )
+    print(dataset.data.train_mask)
+
     print( sum( dataset.data.train_mask ) )
     print( sum( dataset.data.val_mask ) )
     print( sum( dataset.data.test_mask ) )

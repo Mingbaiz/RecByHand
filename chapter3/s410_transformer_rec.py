@@ -81,6 +81,7 @@ class Transformer4Rec( nn.Module ):
     def forward( self, x, history_seqs, target_item , target_label ):
         # [ batch_size, seqs_len, dim ]
         item_embs = self.items( x )
+        # [ batch_size, seqs_len, dim ]
         item_embs = self.encoder( item_embs )
         recLoss = self.forwardRec( item_embs,target_item,target_label )
         auxLoss = self.forwardPredHistory( item_embs, history_seqs )

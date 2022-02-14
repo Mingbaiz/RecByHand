@@ -47,10 +47,9 @@ def doSig( inputMatrix ):
     '''
     # 生成一个行index组成的列表
     seqSet = [ i for i in range( inputMatrix.shape[0] ) ]
-    # 生成一个长度为数据长度的值为-1的列表
+    # 生成一个长度为列数,值为-1的列表
     result = [ -1 for i in range( inputMatrix.shape[1] ) ]
     count = 0
-
     while len( seqSet ) > 0:
         randomSeq = random.choice( seqSet ) # 随机选择一个序号
         for i in range(inputMatrix.shape[1]): # 遍历所有数据在那一行的值
@@ -59,11 +58,9 @@ def doSig( inputMatrix ):
                 # 则将那一行的序号赋值给result列表中对应的位置
                 result[i] = randomSeq
                 count += 1
-
         # 当count数量等于数据长度后说明result中的值均不为-1，意味着均赋过值了，所以跳出循环。
         if count == inputMatrix.shape[1]:
             break
-
         # 一轮下来result列表没收集出足够的数值则继续循环，但不会再选择刚那一行。
         seqSet.remove( randomSeq )
 

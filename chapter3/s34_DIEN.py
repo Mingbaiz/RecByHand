@@ -22,7 +22,7 @@ class AUGRU( nn.Module ):
     def forward( self, x, item ):
         '''
         :param x: 输入的序列向量，维度为 [ batch_size, seq_lens, dim ]
-        :param item: 目标物品的
+        :param item: 目标物品的向量
         :return: outs: 所有AUGRU单元输出的隐藏向量[ batch_size, seq_lens, dim ]
                  h: 最后一个AUGRU单元输出的隐藏向量[ batch_size, dim ]
         '''
