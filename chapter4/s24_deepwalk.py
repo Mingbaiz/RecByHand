@@ -25,7 +25,7 @@ def getDeepwalkSeqs(g, walk_length, num_walks):
 
 def deepwalk( g, dimensions = 10, walk_length = 80, num_walks = 10, min_count = 3 ):
     seqs = getDeepwalkSeqs(g, walk_length = walk_length, num_walks = num_walks)
-    model = word2vec.Word2Vec(seqs, size = dimensions, min_count = min_count)
+    model = word2vec.Word2Vec(seqs, vector_size = dimensions, min_count = min_count)
     return model
 
 if __name__ == '__main__':
