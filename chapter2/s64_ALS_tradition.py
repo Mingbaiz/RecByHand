@@ -42,7 +42,6 @@ class ALS():
         self.bu[u] += lr * (loss - lamda * self.bu[u])
         self.bi[i] += lr * (loss - lamda * self.bi[i])
 
-
 #测试RMSE
 def evaluateRMSE(testSet, als):
     testSet = np.array(testSet)

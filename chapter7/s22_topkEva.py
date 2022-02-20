@@ -77,7 +77,7 @@ def doTopKEva( ks = [ 1,2,5,10,20,50,100 ] ):
     return all_dict
 
 if __name__ == '__main__':
-    train( )
-    doModelEva( )
+    #train( )
+    #doModelEva( )
     doTopKEva( )
 

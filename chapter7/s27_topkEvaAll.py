@@ -97,8 +97,8 @@ def doTopKEva( model_paths = model_paths,
     return all_dict
 
 if __name__ == '__main__':
-    train( )
-    doModelEva( )
+    #train( )
+    #doModelEva( )
     doTopKEva( )
 
 
