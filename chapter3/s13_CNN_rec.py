@@ -38,8 +38,11 @@ class embedding_CNN( nn.Module ):
     def forward(self, u, i, isTrain = True):
         user_ids = torch.LongTensor(self.user_df.loc[u].values)
         item_ids = torch.LongTensor(self.item_df.loc[i].values)
+        print(user_ids)
         # [batch_size, user_neibours, dim]
         user_features = self.user_features(user_ids)
+        print(user_features.shape)
+
         # [batch_size, item_neibours, dim]
         item_features = self.item_features(item_ids)
 
@@ -81,8 +84,11 @@ def train( epochs = 10, batchSize = 1024, lr = 0.001, dim = 128, eva_per_epochs 
     #读取数据
     train_triples, test_triples, user_df, item_df, n_user_features, n_item_features= \
         dataloader4ml100kIndexs.read_data_user_item_df()
+
     #初始化模型
     net = embedding_CNN( n_user_features, n_item_features, user_df, item_df, dim)
+
+
     #定义损失函数
     criterion = torch.nn.BCELoss()
     #初始化优化器

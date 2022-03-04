@@ -131,7 +131,9 @@ def read_data():
 
 if __name__ == '__main__':
     item_df = generate_item_df(0, fp.Ml_100K.ITEM_DF_0)
-    print(item_df)
+    #print(item_df)
 
-    #read_data()
+    train_triples, test_triples, user_df, item_df,lenitems = read_data()
+    print(user_df)
+    print(item_df)
 

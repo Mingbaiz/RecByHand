@@ -1,3 +1,4 @@
-# recbyhand
+# 环境安装
 
-其实暂时还不是公开的代码
+pip install -r requirements.txt
+pip install torch-scatter torch-sparse torch-cluster torch-spline-conv torch-geometric -f https://data.pyg.org/whl/torch-1.10.0+cpu.html
