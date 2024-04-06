@@ -80,6 +80,7 @@ class GAT4Rec( torch.nn.Module ):
             # 将得到的目标节点向量与其邻居节点向量传入GAT的多头注意力层聚合出更新后的目标节点向量
             # [图采样时的某一阶的中心节点数量, dim ]
             aggEmbeddings = self.multiHeadAttentionAggregator( target_embs, entity_embs )
+            n_hop += 1
         # 返回最后的目标节点向量也就是指定代表这一批次的物品向量,形状为 [ batch_size, dim ]
         return aggEmbeddings
 

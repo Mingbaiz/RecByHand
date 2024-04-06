@@ -98,5 +98,9 @@ if __name__ == '__main__':
     #genrateRecSeqWithNeg(fp.Ml_latest_small.RATING_TS,fp.Ml_latest_small.SEQS_NEG)
 
 
-    train, test, allItems = getTrainAndTestSeqsWithNeg(fp.Ml_latest_small.SEQS_NEG)
+    #train, test, allItems = getTrainAndTestSeqsWithNeg(fp.Ml_latest_small.SEQS_NEG)
+    #print(train)
+
+
+    train,test,allItems = getTrainAndTestSeqs(fp.Ml_latest_small.SEQS)
     print(train)

@@ -90,8 +90,8 @@ def drawRoc( fprs, tprs ):
 
 if __name__ == '__main__':
 
-    trues = getRandomTrueList(100)
-    preds = getRandomPredList(trues,0.8)
+    trues = getRandomTrueList(20)
+    preds = getRandomPredList(trues,0.6)
 
     fprs, tprs = getRocCurve(trues, preds)
     drawRoc(fprs,tprs)
