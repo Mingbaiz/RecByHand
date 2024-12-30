@@ -1,3 +1,5 @@
+import sys
+sys.path.append('D:/DeepLearning/推荐系统/recbyhand')
 import os
 import numpy as np
 from data_set import filepaths as fp

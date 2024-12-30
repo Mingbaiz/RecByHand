@@ -1,3 +1,6 @@
+import sys
+sys.path.append('D:/DeepLearning/推荐系统/recbyhand')
+
 from utils import osUtils as ou
 import random
 from tqdm import tqdm
