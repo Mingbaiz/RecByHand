@@ -91,7 +91,3 @@ if __name__ == '__main__':
 
     recomedations_by_itemCF = trainItemCF( user_items_train, item_users_train, k=5 )
     print( recomedations_by_itemCF )
-
-
-
-
