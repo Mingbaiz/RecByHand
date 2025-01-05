@@ -5,6 +5,8 @@ Model_Dir = os.path.join(ROOT,'model')
 
 class Ml_100K():
     #下载地址：https://github.com/rexrex9/kb4recMovielensDataProcess
+    # 以双下划线（__）开头的属性名（如这里的__BASE）在类定义里通常会被解释器进行名称改写（Name Mangling）
+    # 用于实现一种有限的 “私有” 机制，实际的属性名会被改写成_类名__属性名的形式。
     __BASE = os.path.join(ROOT, 'ml-100k')
     ORGINAL_DIR = os.path.join(ROOT,'ml-100k-orginal')
     USER_DF = os.path.join(ORGINAL_DIR,'user_df.csv')
@@ -22,4 +24,7 @@ class Ml_latest_small():
 
     SEQS_NEG = os.path.join(__BASE, 'seqsWithNeg.npy')
 
-
+print(os.path.realpath(__file__))
+print(ROOT)
+print(Ml_100K._Ml_100K__BASE)
+print(Ml_100K.RATING)
